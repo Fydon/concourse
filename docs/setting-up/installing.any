@@ -76,8 +76,8 @@ a tool that meshes well with Concourse's ideals, buckle up and head over to
       Grab the appropriate binary for your platform from the
       \reference{downloads}{downloads} section.
     }{
-      For Linux you'll need kernel v3.19 or later. Windows and Darwin don't
-      really need anything special.
+      For Linux you'll need kernel v3.19 or later, with user namespace support
+      enabled. Windows and Darwin don't really need anything special.
     }{
       PostgresSQL 9.3+
     }
@@ -313,13 +313,13 @@ a tool that meshes well with Concourse's ideals, buckle up and head over to
   \codeblock{bash}{
     mkdir -p keys/web keys/worker
 
-    ssh-keygen -t rsa -f ./keys/web/tsa_host_key -N ''
+    ssh-keygen -t rsa -f ./keys/web/host_key -N ''
     ssh-keygen -t rsa -f ./keys/web/session_signing_key -N ''
 
     ssh-keygen -t rsa -f ./keys/worker/worker_key -N ''
 
     cp ./keys/worker/worker_key.pub ./keys/web/authorized_worker_keys
-    cp ./keys/web/tsa_host_key.pub ./keys/worker
+    cp ./keys/web/host_key.pub ./keys/worker
   }
 
   The next thing you'll need is an address that can be used to reach the
@@ -568,7 +568,7 @@ a tool that meshes well with Concourse's ideals, buckle up and head over to
         \item{\code{host_key} on the \code{tsa} job}{
           the contents of the private key for the TSA server
         }
-        \item{\code{tsa.host_public_key} on the \code{groundcrew} job}{
+        \item{\code{host_public_key} on the \code{tsa} job}{
           the public key of the TSA, for the workers to use to verify the
           connection
         }
@@ -587,14 +587,7 @@ a tool that meshes well with Concourse's ideals, buckle up and head over to
               -----BEGIN RSA PRIVATE KEY-----
               <a bunch of stuff>
               -----END RSA PRIVATE KEY-----
-        - # ...
-      - name: worker
-        jobs:
-        - name: groundcrew
-          release: concourse
-          properties:
-            tsa:
-              host_public_key: "ssh-rsa blahblahblah"
+            host_public_key: "ssh-rsa blahblahblah"
         - # ...
       }
 
@@ -618,11 +611,11 @@ a tool that meshes well with Concourse's ideals, buckle up and head over to
         \item{\code{tsa.private_key} on the \code{groundcrew} job}{
           the private key for the worker to use when accessing the TSA
         }
+        \item{\code{tsa.host} and \code{tsa.host_public_key} on the \code{groundcrew} job}{
+          if the worker is in a separate deployment, these must be configured
+          to reach the TSA
+        }
       }
-
-      Note that depending on your deployment scheme, the \code{tsa.private_key}
-      property may live in a separate deployment, or even be manually used (if
-      you're not deploying the worker with BOSH).
 
       Once again, after setting these properties run \code{bosh deploy} to make
       the changes take place.

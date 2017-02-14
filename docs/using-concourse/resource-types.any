@@ -20,6 +20,9 @@ before using it!
     The \hyperlink{https://github.com/concourse/git-resource}{\code{git}} resource can
     pull and push to git repositories.
   }{
+    The \hyperlink{https://github.com/concourse/hg-resource}{\code{hg}} resource can
+    pull and push to Mercurial repositories.
+  }{
     The \hyperlink{https://github.com/concourse/time-resource}{\code{time}} resource
     can start jobs on a schedule or timestamp outputs.
   }{
@@ -78,6 +81,8 @@ before using it!
   }{
     \hyperlink{https://github.com/jtarchie/pullrequest-resource}{Pull Requests}
   }{
+    \hyperlink{https://github.com/swisscom/gitlab-merge-request-resource}{GitLab Merge Requests}
+  }{
     \hyperlink{https://github.com/sapcc/concourse-swift-resource}{OpenStack Swift}
   }{
     \hyperlink{https://github.com/starkandwayne/flowdock-concourse-notification-resource}{Flowdock notifications}
@@ -90,9 +95,9 @@ before using it!
   }{
     \hyperlink{https://github.com/olhtbr/p4-resource}{Perforce}
   }{
-    \hyperlink{https://github.com/cromega/http-resource}{HTTP client}
-  }{
     \hyperlink{https://github.com/starkandwayne/bosh-errand-resource-boshrelease}{BOSH Errands}
+  }{
+    \hyperlink{https://github.com/EMC-Dojo/bosh-config-resource}{BOSH Config: cloud-config and runtime-config}
   }{
     \hyperlink{https://github.com/cfmobile/pool-trigger-resource}{Pool Trigger}
   }{
@@ -134,11 +139,15 @@ before using it!
   }{
     \hyperlink{https://github.com/mrsixw/concourse-rsync-resource}{Rsync}
   }{
+    \hyperlink{https://github.com/cf-platform-eng/concourse-pypi-resource}{PyPI Packages}
+  }{
     \hyperlink{https://github.com/mdomke/concourse-devpi-resource}{Devpi Server: PyPI mirror and package server}
   }{
     \hyperlink{https://github.com/danrspencer/jira-resource}{Jira Integration}
   }{
     \hyperlink{https://github.com/jpatel-pivotal/google-drive-concourse-resource}{Google Drive}
+  }{
+    \hyperlink{https://github.com/henrytk/calendar-resource}{Google Calendar}
   }{
     \hyperlink{https://github.com/FidelityInternational/concourse-pagerduty-notification-resource}{pagerduty Notifications}
   }{
@@ -149,6 +158,16 @@ before using it!
     \hyperlink{https://github.com/troykinsella/concourse-fly-resource}{Fly}
   }{
     \hyperlink{https://github.com/jcderr/concourse-kubernetes-resource}{Kubernetes}
+  }{
+    \hyperlink{https://github.com/Docurated/concourse-vault-resource}{Vault}
+  }{
+    \hyperlink{https://github.com/everpeace/aws-kms-resource}{AWS Key Management Service}
+  }{
+    \hyperlink{https://github.com/ckaznocha/marathon-resource}{Marathon}
+  }{
+    \hyperlink{https://github.com/suhlig/concourse-rss-resource}{RSS}
+  }{
+    \hyperlink{https://github.com/patrickcrocker/maven-resource}{Maven Resource}
   }
 
   \section{Adding to this list}{

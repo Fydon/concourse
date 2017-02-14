@@ -269,6 +269,8 @@ jobs:
   public: true
   plan:
   - aggregate:
+    - get: docker
+      trigger: true
     - get: docker-image-resource
       trigger: true
     - get: buildroot-iptables-image
@@ -337,6 +339,24 @@ jobs:
       BOSH_PRIVATE_CONFIG: {{bosh-private-config}}
   - put: concourse
     params: {repository: bumped-concourse, rebase: true}
+
+- name: datadog-event-resource
+  serial: true
+  public: true
+  plan:
+  - aggregate:
+    - get: buildroot-base-image
+      params: {save: true}
+      passed: [buildroot-base]
+      trigger: true
+    - get: datadog-event-resource
+      trigger: true
+  - task: unit-and-build
+    file: datadog-event-resource/build.yml
+  - put: datadog-event-resource-image
+    params:
+      load_base: buildroot-base-image
+      build: built-resource
 
 - name: archive-resource
   serial: true
@@ -753,6 +773,12 @@ resources:
     uri: https://github.com/concourse/time-resource.git
     branch: master
 
+- name: datadog-event-resource
+  type: git
+  source:
+    uri: https://github.com/concourse/datadog-event-resource.git
+    branch: master
+
 - name: tracker-resource
   type: git
   source:
@@ -871,6 +897,14 @@ resources:
     password: {{docker-password}}
     repository: concourse/time-resource
 
+- name: datadog-event-resource-image
+  type: docker-image
+  source:
+    username: {{docker-username}}
+    email: {{docker-email}}
+    password: {{docker-password}}
+    repository: concourse/datadog-event-resource
+
 - name: tracker-resource-image
   type: docker-image
   source:
@@ -944,7 +978,10 @@ resources:
 - name: cf-cli
   type: s3
   source:
-    bucket: go-cli
+    bucket: {{cli-bucket-name}}
+    region_name: {{cli-bucket-region}}
+    access_key_id: {{cli-bucket-access-key-id}}
+    secret_access_key: {{cli-bucket-secret-access-key}}
     regexp: releases/v([\d\.]+)/cf-cli_.*_linux_x86-64.tgz
 
 - name: concourse
@@ -1076,3 +1113,9 @@ resources:
   source:
     repository: ubuntu
     tag: "16.04"
+
+- name: docker
+  type: github-release
+  source:
+    user: docker
+    repository: docker

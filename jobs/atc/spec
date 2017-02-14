@@ -205,6 +205,10 @@ properties:
       param2: value2
     default: {}
 
+  generic_oauth.scope:
+    description: OAuth scope required for users who will have access.
+    default: ""
+
   generic_oauth.token_url:
     description: Generic OAuth provider token endpoint URL.
     default: ""
@@ -284,3 +288,11 @@ properties:
     description: |
       An optional prefix for emitted Riemann services
     default: ""
+
+  riemann.tags:
+    description: |
+      An optional map of tags in key: value format
+    default: {}
+    example:
+      env: dev
+      foo: bar
