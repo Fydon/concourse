@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e -u
+
+ROOT=$(cd $(dirname $0)/.. && pwd)
+
+export GOPATH=$ROOT
+export PATH=$ROOT/bin:$PATH
+
+go install github.com/mattn/goreman
+
+cd $ROOT/dev
+
+# set up keys
+./setup
+
+# obtain sudo early so worker process can start
+sudo true
+
+# start everything up
+goreman -f ${PROCFILE:-Procfile} start "$@"
